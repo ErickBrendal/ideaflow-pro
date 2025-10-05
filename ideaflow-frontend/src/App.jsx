@@ -34,6 +34,28 @@ import './App.css'
 // Dados iniciais vazios para produção - usuário começará do zero
 const initialIdeas = []
 
+// Configurações de integração
+const WHATSAPP_NUMBER = "5511974455563" // (11) 97445-5563
+const WHATSAPP_MESSAGE = "Olá! Gostaria de adicionar uma nova ideia no IdeaFlow Pro:"
+
+// Funções de integração
+const openWhatsApp = (message = WHATSAPP_MESSAGE) => {
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+  window.open(url, '_blank')
+}
+
+const openGmail = () => {
+  window.open('https://mail.google.com/mail/u/0/#inbox', '_blank')
+}
+
+const openOutlook = () => {
+  window.open('https://outlook.live.com/mail/', '_blank')
+}
+
+const openICloud = () => {
+  window.open('https://www.icloud.com/mail/', '_blank')
+}
+
 const statusColors = {
   'BACKLOG': 'bg-gray-100 text-gray-800',
   'REFINAMENTO': 'bg-blue-100 text-blue-800',
@@ -109,7 +131,7 @@ function App() {
   }
 
   const MetricCard = ({ title, value, trend, icon: Icon, color = "text-blue-600" }) => (
-    <Card className="hover:shadow-lg transition-shadow duration-200">
+    <Card className="card-hover">
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -130,7 +152,7 @@ function App() {
   const IdeaCard = ({ idea }) => {
     const TypeIcon = typeIcons[idea.type]
     return (
-      <Card className="hover:shadow-md transition-shadow duration-200 cursor-pointer">
+      <Card className="card-hover cursor-pointer">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-2">
@@ -217,9 +239,58 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-subtle relative overflow-hidden">
+      {/* Marca d'água animada com efeito de onda */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 opacity-5">
+          <svg className="w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="none">
+            <defs>
+              <pattern id="wave" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+                <path d="M0,100 Q50,50 100,100 T200,100 V200 H0 Z" fill="currentColor" className="text-blue-600">
+                  <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    values="0,0; 200,0; 0,0"
+                    dur="20s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#wave)" />
+          </svg>
+        </div>
+        
+        {/* Ondas adicionais com diferentes velocidades */}
+        <div className="absolute inset-0 opacity-3">
+          <svg className="w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="none">
+            <defs>
+              <pattern id="wave2" x="0" y="0" width="300" height="150" patternUnits="userSpaceOnUse">
+                <path d="M0,75 Q75,25 150,75 T300,75 V150 H0 Z" fill="currentColor" className="text-purple-600">
+                  <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    values="300,0; 0,0; 300,0"
+                    dur="15s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#wave2)" />
+          </svg>
+        </div>
+
+        {/* Elementos flutuantes */}
+        <div className="absolute top-20 left-10 w-4 h-4 bg-blue-200 rounded-full float-animation pulse-animation" style={{animationDelay: '0s'}}></div>
+        <div className="absolute top-40 right-20 w-6 h-6 bg-purple-200 rounded-full float-animation pulse-animation" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-40 left-1/4 w-3 h-3 bg-indigo-200 rounded-full float-animation pulse-animation" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 right-1/3 w-5 h-5 bg-blue-300 rounded-full float-animation pulse-animation" style={{animationDelay: '0.5s'}}></div>
+        <div className="absolute top-1/2 left-20 w-2 h-2 bg-cyan-200 rounded-full float-animation pulse-animation" style={{animationDelay: '3s'}}></div>
+        <div className="absolute top-1/3 right-1/4 w-4 h-4 bg-violet-200 rounded-full float-animation pulse-animation" style={{animationDelay: '1.5s'}}></div>
+      </div>
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
+      <header className="relative z-20 bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
@@ -232,14 +303,38 @@ function App() {
           </div>
           
           <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => openWhatsApp()}>
               <MessageSquare className="h-4 w-4 mr-2" />
               WhatsApp
             </Button>
-            <Button variant="outline" size="sm">
-              <Calendar className="h-4 w-4 mr-2" />
-              Calendários
-            </Button>
+            <div className="relative group">
+              <Button variant="outline" size="sm">
+                <Calendar className="h-4 w-4 mr-2" />
+                Calendários
+              </Button>
+              <div className="absolute right-0 top-full mt-2 w-48 dropdown-menu rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="py-1">
+                  <button 
+                    onClick={openGmail}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    📧 Gmail
+                  </button>
+                  <button 
+                    onClick={openOutlook}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    📮 Outlook
+                  </button>
+                  <button 
+                    onClick={openICloud}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 flex items-center gap-2"
+                  >
+                    ☁️ iCloud
+                  </button>
+                </div>
+              </div>
+            </div>
             <Button variant="outline" size="sm">
               <Bell className="h-4 w-4" />
             </Button>
@@ -251,7 +346,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="p-6">
+      <main className="relative z-10 p-6">
         <Tabs value={selectedTab} onValueChange={setSelectedTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>

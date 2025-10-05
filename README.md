@@ -9,8 +9,8 @@ Sistema revolucionário para captura, organização, análise e execução de id
 - **Pipeline de Status** estruturado (Backlog → Refinamento → Estimativa → Custo → Desenvolvimento → Conclusão)
 - **Sistema de Priorização** (Baixa, Média, Alta, Crítica)
 - **Categorização Automática** de ideias
-- **Integração WhatsApp** para captura rápida
-- **Sincronização com Calendários** (Google, Outlook, iCloud)
+- **Integração WhatsApp** para captura rápida - (11) 97445-5563
+- **Sincronização com Calendários** (Gmail, Outlook, iCloud)
 
 ### 📊 **Analytics e Relatórios**
 - Taxa de conclusão de ideias
@@ -30,8 +30,8 @@ Sistema revolucionário para captura, organização, análise e execução de id
 
 ### Frontend
 - **React 18** com Hooks
-- **Next.js 14** (App Router)
-- **TypeScript** para type safety
+- **Vite** para build otimizado
+- **JavaScript (JSX)** com componentes modernos
 - **Tailwind CSS** para estilização
 - **shadcn/ui** para componentes
 - **Lucide Icons** para ícones
@@ -94,12 +94,15 @@ ideaflow-pro/
 - [x] Categorização e priorização
 - [x] Interface responsiva
 - [x] Componentes UI modernos
+- [x] Integração WhatsApp funcional
+- [x] Links para Gmail, Outlook e iCloud
+- [x] Marca d'água animada com efeito de ondas
 
 ### 🔄 **Em Desenvolvimento**
-- [ ] Integração WhatsApp Business API
-- [ ] Sincronização com calendários
-- [ ] Sistema de notificações
-- [ ] Relatórios avançados
+- [ ] WhatsApp Business API para recebimento automático
+- [ ] Sincronização bidirecional com calendários
+- [ ] Sistema de notificações push
+- [ ] Relatórios avançados com gráficos
 - [ ] Colaboração em equipe
 - [ ] App mobile (React Native)
 
