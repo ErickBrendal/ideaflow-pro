@@ -1,0 +1,32 @@
+{
+  "name": "ideaflow-pro",
+  "version": "1.0.0",
+  "description": "Sistema Completo de Gestão de Ideias com Integração WhatsApp e Calendários",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd ideaflow-frontend && pnpm run dev",
+    "build": "cd ideaflow-frontend && pnpm run build",
+    "start": "cd ideaflow-frontend && pnpm run preview",
+    "install-deps": "cd ideaflow-frontend && pnpm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErickBrendal/ideaflow-pro.git"
+  },
+  "keywords": [
+    "ideias",
+    "gestao",
+    "whatsapp",
+    "calendario",
+    "produtividade",
+    "react",
+    "nextjs",
+    "typescript"
+  ],
+  "author": "Erick Brendal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ErickBrendal/ideaflow-pro/issues"
+  },
+  "homepage": "https://github.com/ErickBrendal/ideaflow-pro#readme"
+}
