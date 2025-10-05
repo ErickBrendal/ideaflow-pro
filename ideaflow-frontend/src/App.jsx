@@ -31,54 +31,8 @@ import {
 } from 'lucide-react'
 import './App.css'
 
-// Mock data para demonstração
-const mockIdeas = [
-  {
-    id: '1',
-    title: 'App de Delivery Sustentável',
-    description: 'Plataforma que conecta restaurantes locais com foco em embalagens biodegradáveis',
-    type: 'IDEIA',
-    category: 'Tecnologia',
-    status: 'DESENVOLVIMENTO',
-    priority: 'ALTA',
-    estimatedCost: 50000,
-    estimatedTime: 120,
-    deadline: '2024-12-15',
-    tags: ['sustentabilidade', 'delivery', 'mobile'],
-    sourceChannel: 'WHATSAPP',
-    createdAt: '2024-10-01'
-  },
-  {
-    id: '2',
-    title: 'Curso Online de IA',
-    description: 'Programa educacional completo sobre inteligência artificial para iniciantes',
-    type: 'OBJETIVO',
-    category: 'Educação',
-    status: 'ESTIMATIVA',
-    priority: 'MEDIA',
-    estimatedCost: 25000,
-    estimatedTime: 90,
-    deadline: '2024-11-30',
-    tags: ['educação', 'IA', 'online'],
-    sourceChannel: 'WEB',
-    createdAt: '2024-09-28'
-  },
-  {
-    id: '3',
-    title: 'Aumentar Receita em 30%',
-    description: 'Meta de crescimento para o próximo trimestre através de novos produtos',
-    type: 'META',
-    category: 'Negócios',
-    status: 'REFINAMENTO',
-    priority: 'CRITICA',
-    estimatedCost: 100000,
-    estimatedTime: 180,
-    deadline: '2024-12-31',
-    tags: ['receita', 'crescimento', 'produtos'],
-    sourceChannel: 'CALENDAR',
-    createdAt: '2024-10-03'
-  }
-]
+// Dados iniciais vazios para produção - usuário começará do zero
+const initialIdeas = []
 
 const statusColors = {
   'BACKLOG': 'bg-gray-100 text-gray-800',
@@ -103,7 +57,7 @@ const typeIcons = {
 }
 
 function App() {
-  const [ideas, setIdeas] = useState(mockIdeas)
+  const [ideas, setIdeas] = useState(initialIdeas)
   const [selectedTab, setSelectedTab] = useState('dashboard')
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [newIdea, setNewIdea] = useState({
@@ -114,12 +68,22 @@ function App() {
     priority: 'MEDIA'
   })
 
-  // Métricas calculadas
+  // Métricas calculadas dinamicamente
   const totalIdeas = ideas.length
   const completedIdeas = ideas.filter(idea => idea.status === 'CONCLUSAO').length
   const completionRate = totalIdeas > 0 ? Math.round((completedIdeas / totalIdeas) * 100) : 0
-  const averageROI = 245
-  const averageTime = 12
+  
+  // ROI médio calculado baseado nas ideias com custo estimado
+  const ideasWithCost = ideas.filter(idea => idea.estimatedCost && idea.estimatedCost > 0)
+  const averageROI = ideasWithCost.length > 0 
+    ? Math.round(ideasWithCost.reduce((acc, idea) => acc + (idea.estimatedROI || 200), 0) / ideasWithCost.length)
+    : 0
+  
+  // Tempo médio calculado baseado nas ideias com tempo estimado
+  const ideasWithTime = ideas.filter(idea => idea.estimatedTime && idea.estimatedTime > 0)
+  const averageTime = ideasWithTime.length > 0
+    ? Math.round(ideasWithTime.reduce((acc, idea) => acc + idea.estimatedTime, 0) / ideasWithTime.length)
+    : 0
 
   const handleAddIdea = () => {
     const idea = {
@@ -128,7 +92,10 @@ function App() {
       status: 'BACKLOG',
       tags: [],
       sourceChannel: 'WEB',
-      createdAt: new Date().toISOString().split('T')[0]
+      createdAt: new Date().toISOString().split('T')[0],
+      estimatedROI: 200, // ROI padrão de 200% para novas ideias
+      estimatedCost: newIdea.estimatedCost || 0,
+      estimatedTime: newIdea.estimatedTime || 30 // Tempo padrão de 30 dias
     }
     setIdeas([...ideas, idea])
     setNewIdea({ title: '', description: '', type: 'IDEIA', category: '', priority: 'MEDIA' })
@@ -312,15 +279,15 @@ function App() {
               />
               <MetricCard 
                 title="ROI Médio" 
-                value={`${averageROI}%`} 
-                trend="+18%" 
+                value={averageROI > 0 ? `${averageROI}%` : "0%"} 
+                trend={averageROI > 0 ? "+18%" : "0%"} 
                 icon={TrendingUp}
                 color="text-purple-600"
               />
               <MetricCard 
                 title="Tempo Médio" 
-                value={`${averageTime}d`} 
-                trend="-3d" 
+                value={averageTime > 0 ? `${averageTime}d` : "0d"} 
+                trend={averageTime > 0 ? "-3d" : "0d"} 
                 icon={Timer}
                 color="text-orange-600"
               />

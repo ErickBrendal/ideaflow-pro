@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "buildCommand": "cd ideaflow-frontend && npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "ideaflow-frontend/dist",
+  "installCommand": "cd ideaflow-frontend && npm install --legacy-peer-deps",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -4,10 +4,10 @@
   "description": "Sistema Completo de Gestão de Ideias com Integração WhatsApp e Calendários",
   "main": "index.js",
   "scripts": {
-    "dev": "cd ideaflow-frontend && pnpm run dev",
-    "build": "cd ideaflow-frontend && pnpm run build",
-    "start": "cd ideaflow-frontend && pnpm run preview",
-    "install-deps": "cd ideaflow-frontend && pnpm install"
+    "dev": "cd ideaflow-frontend && npm run dev",
+    "build": "cd ideaflow-frontend && npm install --legacy-peer-deps && npm run build",
+    "start": "cd ideaflow-frontend && npm run preview",
+    "install-deps": "cd ideaflow-frontend && npm install"
   },
   "repository": {
     "type": "git",
